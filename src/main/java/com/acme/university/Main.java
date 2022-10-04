@@ -2,6 +2,8 @@
 
 package com.acme.university;
 
+import com.acme.university.factory.UniversityFactory;
+import com.acme.university.model.University;
 import com.acme.university.util.CSVParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,10 @@ public class Main {
     public static void main(String[] args) {
         CSVParser parser = new CSVParser();
         List<String> universitiesAsStrings = parser.parse("csvFiles/preprocessed/universities.csv");
-        universitiesAsStrings.stream().forEach(university -> log.info("University: {}", university));
+        UniversityFactory universityFactory = new UniversityFactory();
+        List<University> universities = universityFactory.load(universitiesAsStrings);
+        universities.forEach(university -> log.info("{}",university));
+
 
         List<String> departmentsAsStrings = parser.parse("csvFiles/preprocessed/departments.csv");
         departmentsAsStrings.stream().forEach(department -> log.info("Department: {}", department));
